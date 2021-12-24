@@ -33,13 +33,16 @@ private:
 	Point m_A;
 	Point m_B;
 	Point m_C;
-
 public:
 	Triangle(const Point& A, const Point& B, const Point& C) : m_A{ A }, m_B{ B }, m_C{ C } {};
 
-	double getArea() const		//рассчёт по формуле Герона(длинам сторон)
+	double getArea() const		//Рассчёт по длинам сторон(формула Герона).
 	{
-		return fabs((((m_B.getX() - m_A.getX()) * (m_C.getY() - m_A.getY())) - ((m_C.getX() - m_A.getX()) * (m_B.getY() - m_A.getY()))) / 2);
+		double semiPerimeter = this->getPerimeter() / 2;
+		return sqrt(semiPerimeter
+			* (semiPerimeter - Segment(m_A, m_B).getLength())		//разность полупериметра и стороны
+			* (semiPerimeter - Segment(m_B, m_C).getLength())
+			* (semiPerimeter - Segment(m_A, m_C).getLength()));
 	}
 
 	double getPerimeter() const		//Используя анонимные объекты класса "Сегмент", суммируем длины сторон.
@@ -47,7 +50,7 @@ public:
 		return  (Segment(m_A, m_B).getLength() + Segment(m_B, m_C).getLength() + Segment(m_A, m_C).getLength());
 	}
 
-	double compareArea(const Triangle& with) const		//неплохо бы также перегрузить операторы сравнения
+	double compareArea(const Triangle& with) const
 	{
 		return this->getArea() - with.getArea();
 	}
