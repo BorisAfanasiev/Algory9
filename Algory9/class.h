@@ -47,6 +47,11 @@ public:
 		return  (Segment(m_A, m_B).getLength() + Segment(m_B, m_C).getLength() + Segment(m_A, m_C).getLength());
 	}
 
+	double getSemiPerimetr()
+	{
+		return this->getPerimeter() / 2;
+	}
+
 	double compareArea(const Triangle& with) const		//неплохо бы также перегрузить операторы сравнения
 	{
 		return this->getArea() - with.getArea();
